@@ -1,28 +1,46 @@
+<?php
+use App\Http\Controllers\ProductController;
+$total=0;
+if(Session::has('user')){
+$total= ProductController :: cartItem();
+}
+?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+  <a class="navbar-brand" href="/">E-COMM</a>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Orders</a></li>
+        </ul>
+        <form action="/search" class="navbar-form navbar-left">
+          <div class="form-group">
+            <input type="text" name="query" class="form-control search-box" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+      
+    <ul class="navbar-nav navbar-right">
+    <li><a href="#">cart{{$total}}</a></li>
+    @if(Session::has('user'))
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Session::get('user')['name']}}
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/logout">Logout</a></li>
+          
+        </ul>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Orders</a>
-      </li>
-     
-        
-       
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
+      @else
+      <li><a href="/login">login</a></li>
+      @endif
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    </div>  
+       
+     
+
   </div>
 </nav>
