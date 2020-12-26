@@ -23,8 +23,28 @@ Route::get('/logout', function () {
     
     return redirect('login');
 });
+Route::view('/register',"register");
+Route::view('/index',"index");
+Route::get("ajout-produit",[ProductController::class,'create']);
+Route::post("index",[ProductController::class,'store']);
 Route::post("/login",[UserController::class,'login']);
+
 Route::get("/",[ProductController::class,'index']);
 Route::get("detail/{id}",[ProductController::class,'detail']);
 Route::get("search",[ProductController::class,'search']);
 Route::post("add_to_cart",[ProductController::class,'add_to_cart']);
+Route::get("cartlist",[ProductController::class,'cartList']);
+Route::get("removecart/{id}",[ProductController::class,'removeCart']);
+Route::get("ordernow",[ProductController::class,'orderNow']);
+Route::post("orderplace",[ProductController::class,'orderPlace']);
+Route::get("myorders",[ProductController::class,'myOrders']);
+
+
+
+Route::group(['prefix' => 'admin'], function () {
+   Voyager::routes();
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
